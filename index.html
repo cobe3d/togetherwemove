@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>回春動動</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="26" fill="#F2B33D"/><path d="M15 36 Q24 8 42 14 Q36 40 15 36Z" fill="#2E6B4E"/></svg>
+    <span class="brand-name" id="topTitle">回春動動</span>
+  </div>
+  <div class="top-actions">
+    <button id="voiceBtn" class="chip-btn" aria-pressed="true">語音引導：開</button>
+    <button id="topHomeBtn" class="chip-btn" hidden>回首頁</button>
+  </div>
+</header>
+
+<main>
+  <!-- 首頁 -->
+  <section id="screen-home" class="screen home">
+    <div class="home-head">
+      <div class="home-left">
+      <div class="home-hello">
+        <h1 id="greeting">早安！今天也來動一動吧</h1>
+        <p class="sub">選一個遊戲，跟著聲音做就可以了</p>
+        <p class="streak" id="streak" hidden></p>
+      </div>
+      <button class="garden-card" id="gardenCard" aria-label="進入回春花園">
+        <span class="gc-plant" id="gcPlant" aria-hidden="true"></span>
+        <span class="gc-info">
+          <b class="gc-title">回春花園</b>
+          <span class="gc-stage" id="gcStage"></span>
+          <span class="mini-bar" aria-hidden="true"><span id="gcBar"></span></span>
+          <span class="gc-points"><b id="gcPoints">0</b> 點<span class="gc-dot">·</span><span id="gcPointsNext"></span></span>
+        </span>
+        <span class="gc-go">進入花園 ›</span>
+      </button>
+
+      <!-- 我的點數 -->
+      <section class="points-card" aria-labelledby="ptTitle">
+        <div class="pt-top">
+          <h2 id="ptTitle">我的點數</h2>
+          <button type="button" class="pt-go" id="ptGo">兌換購物金 ›</button>
+        </div>
+        <div class="pt-grid">
+          <div class="pt-tile main"><span>目前點數</span><b id="ptBalance">0</b><small>點</small></div>
+          <div class="pt-tile"><span>今天已得</span><b id="ptToday">0 / 3</b><small id="ptTodayNote"></small></div>
+          <div class="pt-tile"><span>累計得到</span><b id="ptEarned">0</b><small>點</small></div>
+          <div class="pt-tile"><span>已兌換</span><b id="ptRedeemed">0 張</b><small id="ptRedeemNote"></small></div>
+        </div>
+        <div class="pt-next">
+          <span class="mini-bar" aria-hidden="true"><span id="ptBar"></span></span>
+          <span id="ptNext"></span>
+        </div>
+      </section>
+      </div>
+
+      <!-- 運動次數統計 -->
+      <section class="stats-card" aria-labelledby="statsTitle">
+        <div class="stats-top">
+          <h2 id="statsTitle">運動次數統計</h2>
+          <span class="stats-sum" id="statsSum"></span>
+        </div>
+        <div class="stats-ctrl">
+          <div class="stats-quick" role="group" aria-label="快速選擇日期">
+            <button type="button" data-range="7">最近 7 天</button>
+            <button type="button" data-range="30">最近 30 天</button>
+            <button type="button" data-range="month">這個月</button>
+          </div>
+          <label class="stats-date">從 <input type="date" id="statsFrom"></label>
+          <label class="stats-date">到 <input type="date" id="statsTo"></label>
+        </div>
+        <div class="stats-wrap">
+          <table class="stats-table" id="statsTable"></table>
+        </div>
+        <p class="stats-note">完成一次運動算 1 次（會痛提早停止也算）；示範試玩不列入統計</p>
+      </section>
+    </div>
+
+    <div class="cards">
+      <article class="card featured">
+        <span class="badge">手指運動</span>
+        <div class="card-art art-piano" aria-hidden="true">
+          <svg viewBox="0 0 300 190"><rect x="50" y="40" width="200" height="110" rx="8" fill="#FFFFFF" stroke="#3B4A5A" stroke-width="4"/><path d="M75 40 V150 M100 40 V150 M125 40 V150 M150 40 V150 M175 40 V150 M200 40 V150 M225 40 V150" stroke="#3B4A5A" stroke-width="2"/><g fill="#2A3440"><rect x="68" y="40" width="14" height="62"/><rect x="93" y="40" width="14" height="62"/><rect x="143" y="40" width="14" height="62"/><rect x="168" y="40" width="14" height="62"/><rect x="193" y="40" width="14" height="62"/></g></svg>
+        </div>
+        <h2>彈鋼琴</h2>
+        <p class="card-sub">手指對指</p>
+        <p class="card-meta">〈小星星〉 · 左右各 5 回</p>
+        <button class="btn-primary" data-start="piano">開始</button>
+        <div class="card-links">
+          <button class="btn-link" data-help="piano">看遊戲說明</button>
+          <button class="btn-link" data-demo="piano">示範試玩</button>
+        </div>
+      </article>
+      <article class="card">
+        <span class="badge">手指運動</span>
+        <div class="card-art art-duet" aria-hidden="true">
+          <svg viewBox="0 0 300 190"><rect x="20" y="120" width="260" height="52" rx="6" fill="#FFFFFF" stroke="#3B4A5A" stroke-width="4"/><path d="M52 120 V172 M84 120 V172 M116 120 V172 M148 120 V172 M180 120 V172 M212 120 V172 M244 120 V172" stroke="#3B4A5A" stroke-width="2"/><g fill="#2A3440"><rect x="45" y="120" width="14" height="30"/><rect x="77" y="120" width="14" height="30"/><rect x="141" y="120" width="14" height="30"/><rect x="173" y="120" width="14" height="30"/><rect x="205" y="120" width="14" height="30"/></g><g fill="#F1C9A5"><rect x="69" y="58" width="52" height="46" rx="16"/><rect x="117" y="52" width="12" height="16" rx="6" transform="rotate(35 123 70)"/><rect x="101" y="24" width="12" height="44" rx="6"/><rect x="85" y="18" width="12" height="50" rx="6"/><rect x="69" y="24" width="12" height="44" rx="6"/><rect x="55" y="36" width="12" height="32" rx="6"/></g><g fill="#F1C9A5"><rect x="179" y="58" width="52" height="46" rx="16"/><rect x="171" y="52" width="12" height="16" rx="6" transform="rotate(-35 177 70)"/><rect x="187" y="50" width="12" height="18" rx="6"/><rect x="203" y="18" width="12" height="50" rx="6"/><rect x="219" y="24" width="12" height="44" rx="6"/><rect x="233" y="36" width="12" height="32" rx="6"/></g><circle cx="193" cy="46" r="8" fill="#FFE08A" stroke="#F2B33D" stroke-width="3"/></svg>
+        </div>
+        <h2>雙手聯彈</h2>
+        <p class="card-sub">雙手手指彎曲</p>
+        <p class="card-meta">〈小星星〉＋自動和弦 · 左右輪流 4 回</p>
+        <button class="btn-primary" data-start="duet">開始</button>
+        <div class="card-links">
+          <button class="btn-link" data-help="duet">看遊戲說明</button>
+          <button class="btn-link" data-demo="duet">示範試玩</button>
+        </div>
+      </article>
+      <article class="card">
+        <span class="badge arm">上肢運動</span>
+        <div class="card-art art-drum" aria-hidden="true">
+          <svg viewBox="0 0 300 190"><ellipse cx="150" cy="140" rx="80" ry="22" fill="#C9573F"/><rect x="70" y="80" width="160" height="60" fill="#E06D4F"/><ellipse cx="150" cy="80" rx="80" ry="22" fill="#F7E1C4" stroke="#C9573F" stroke-width="4"/><path d="M101 28 L137 74 M205 24 L169 72" stroke="#6B4A32" stroke-width="8" stroke-linecap="round"/></svg>
+        </div>
+        <h2>打鼓</h2>
+        <p class="card-sub">跨體拍肩</p>
+        <p class="card-meta">〈兩隻老虎〉 · 12 下</p>
+        <button class="btn-primary" data-start="drum">開始</button>
+        <div class="card-links">
+          <button class="btn-link" data-help="drum">看遊戲說明</button>
+          <button class="btn-link" data-demo="drum">示範試玩</button>
+        </div>
+      </article>
+      <article class="card">
+        <span class="badge arm">上肢運動</span>
+        <div class="card-art art-apple" aria-hidden="true">
+          <svg viewBox="0 0 300 190"><rect x="139" y="110" width="22" height="78" fill="#6B4A32"/><circle cx="150" cy="85" r="62" fill="#4C9C62"/><g fill="#D64533"><circle cx="122" cy="70" r="11"/><circle cx="169" cy="58" r="11"/><circle cx="152" cy="105" r="11"/><circle cx="185" cy="95" r="11"/></g></svg>
+        </div>
+        <h2>摘果子</h2>
+        <p class="card-sub">肩關節前舉</p>
+        <p class="card-meta">約 5 分鐘 · 10 下</p>
+        <button class="btn-primary" id="startBtn" data-start="apple">開始</button>
+        <div class="card-links">
+          <button class="btn-link" data-help="apple">看遊戲說明</button>
+          <button class="btn-link" data-demo="apple">示範試玩</button>
+        </div>
+      </article>
+      <article class="card">
+        <span class="badge leg">下肢運動</span>
+        <div class="card-art art-bike" aria-hidden="true">
+          <svg viewBox="0 0 300 190"><g stroke="#E0412F" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M90 125 L138 63 L210 125 M138 63 H185 M118 47 H153 M185 63 L193 40 H213"/></g><g stroke="#2A3440" stroke-width="6" fill="none"><circle cx="90" cy="125" r="40"/><circle cx="210" cy="125" r="40"/></g></svg>
+        </div>
+        <h2>騎腳踏車</h2>
+        <p class="card-sub">站姿抬膝</p>
+        <p class="card-meta">高雄出發環島 · 左右各 5 下</p>
+        <button class="btn-primary" data-start="bike">開始</button>
+        <div class="card-links">
+          <button class="btn-link" data-help="bike">看遊戲說明</button>
+          <button class="btn-link" data-demo="bike">示範試玩</button>
+        </div>
+      </article>
+      <article class="card">
+        <span class="badge leg">下肢運動</span>
+        <div class="card-art art-soccer" aria-hidden="true">
+          <svg viewBox="0 0 300 190"><rect x="0" y="120" width="300" height="70" fill="#4C9C62"/><path d="M0 150 H300" stroke="#FFFFFF" stroke-opacity=".6" stroke-width="3"/><g fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round"><path d="M70 122 V40 H230 V122"/></g><g stroke="#FFFFFF" stroke-opacity=".5" stroke-width="2"><path d="M90 40 V122 M110 40 V122 M130 40 V122 M150 40 V122 M170 40 V122 M190 40 V122 M210 40 V122 M70 60 H230 M70 80 H230 M70 100 H230"/></g><circle cx="150" cy="140" r="30" fill="#FFFFFF" stroke="#2A2F33" stroke-width="3"/><path d="M150 128 L161 136 L157 149 L143 149 L139 136Z" fill="#2A2F33"/><path d="M150 110 L156 114 M178 136 L171 132 M168 165 L164 158 M132 165 L136 158 M122 136 L129 132" stroke="#2A2F33" stroke-width="5" stroke-linecap="round"/></svg>
+        </div>
+        <h2>踢足球</h2>
+        <p class="card-sub">站姿踢腿</p>
+        <p class="card-meta">進球歡呼 · 左右各 5 下</p>
+        <button class="btn-primary" data-start="soccer">開始</button>
+        <div class="card-links">
+          <button class="btn-link" data-help="soccer">看遊戲說明</button>
+          <button class="btn-link" data-demo="soccer">示範試玩</button>
+        </div>
+      </article>
+    </div>
+
+    <div class="home-bottom">
+      <section class="records" aria-labelledby="recordsTitle">
+        <h2 id="recordsTitle">最近紀錄</h2>
+        <div id="records"></div>
+      </section>
+      <section class="home-tools">
+        <div class="safety">
+          <b>運動前請注意</b>
+          <span>坐在穩固、沒有輪子的椅子上。會痛就停下來，不要勉強。</span>
+        </div>
+        <h2>其他功能</h2>
+        <p class="note">沒有鏡頭時，可以按遊戲卡片上的「示範試玩」，看虛擬長輩示範完整流程。</p>
+        <button id="recalBtn" class="btn-link">重新測量能力</button>
+        <p class="note" id="profileNote"></p>
+        <p class="note">鏡頭影像只在這台電腦上處理，不會上傳。本程式是輔助練習工具，不能取代治療師的評估。</p>
+      </section>
+    </div>
+  </section>
+
+  <!-- 回春花園：成長進度與集點 -->
+  <section id="screen-garden" class="screen garden" hidden>
+    <section class="g-main">
+      <h1>回春花園</h1>
+      <p class="sub">每天運動，就幫花澆一次水。澆滿 14 天，花就會開。</p>
+      <div class="g-plant-row">
+        <div class="g-plant" id="gPlant"></div>
+        <div class="g-plant-info">
+          <span class="g-stage" id="gStage"></span>
+          <p class="g-stage-text" id="gStageText"></p>
+          <ol class="drops" id="gDrops" aria-label="這一朵花的澆水進度"></ol>
+          <p class="note" id="gTotal"></p>
+        </div>
+      </div>
+      <div class="g-bed">
+        <h2>花圃 · 已開 <span id="gFlowers">0</span> 朵花</h2>
+        <div id="gBed"></div>
+      </div>
+    </section>
+
+    <aside class="g-side">
+      <section class="g-card g-points">
+        <h2>我的點數</h2>
+        <div class="pts-big"><b id="gPoints">0</b><span>點</span></div>
+        <div class="pts-bar" aria-hidden="true"><div id="gPtsBar"></div></div>
+        <p class="pts-next" id="gPtsNext"></p>
+        <button class="btn-primary" id="redeemBtn">兌換 50 元購物金</button>
+        <div class="redeem-confirm" id="redeemConfirm" hidden>
+          <p id="redeemAsk">確定用 10 點兌換 50 元購物金嗎？</p>
+          <div class="rc-actions">
+            <button class="btn-primary" id="redeemYes">確定兌換</button>
+            <button class="btn-outline" id="redeemNo">取消</button>
+          </div>
+        </div>
+        <ul class="rules">
+          <li>每完成一次運動，得 <b>1 點</b></li>
+          <li>因為會痛提早停止，也會得到 1 點</li>
+          <li>每天最多得 3 點；示範模式不集點</li>
+          <li id="ruleRedeem">每 <b>10 點</b>可兌換 <b>50 元購物金</b></li>
+        </ul>
+      </section>
+      <section class="g-card">
+        <h2>兌換紀錄</h2>
+        <div id="gRedeems"></div>
+        <p class="note">購物金由合作單位核發，請把兌換碼交給工作人員。目前點數只存在這台電腦。</p>
+      </section>
+      <section class="g-card">
+        <h2>點數紀錄</h2>
+        <div id="gHistory"></div>
+      </section>
+    </aside>
+  </section>
+
+  <!-- 遊戲說明：示範動畫＋規則＋注意事項 -->
+  <section id="screen-tutorial" class="screen tutorial" hidden>
+    <div class="tut-stage">
+      <canvas id="tutScene" aria-label="摘果子示範動畫"></canvas>
+      <span class="tut-tag">示範動畫</span>
+      <div class="tut-basket"><span class="lbl" id="tutBasketLabel">籃子</span><div class="basket" id="tutBasket"></div></div>
+      <p class="tut-caption" id="tutCaption"></p>
+    </div>
+    <aside class="tut-panel" aria-live="polite">
+      <ol class="tut-dots" id="tutDots"></ol>
+      <h2 id="tutTitle"></h2>
+      <div class="tut-body" id="tutBody"></div>
+      <div class="tut-foot">
+        <div class="tut-progress" aria-hidden="true"><div id="tutProgress"></div></div>
+        <div class="tut-actions">
+          <button class="btn-outline" id="tutPrev">上一步</button>
+          <button class="btn-primary" id="tutNext">下一步</button>
+        </div>
+        <div class="tut-links">
+          <button class="btn-link" id="tutReplay">再聽一次</button>
+          <button class="btn-link" id="tutSkip">跳過說明，直接開始</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <!-- 位置檢查、能力測量、遊戲共用同一個鏡頭畫面 -->
+  <section id="screen-play" class="screen play" data-phase="loading" hidden>
+    <canvas id="scene" aria-label="鏡頭畫面與遊戲"></canvas>
+
+    <div class="hud">
+      <div class="hud-card hud-reps">
+        <span class="lbl" id="repsLabel">次數</span>
+        <div class="big-row"><b id="repsNow">0</b><span id="repsTotal">/ 10 下</span></div>
+        <div class="basket" id="basket" aria-label="已摘到的蘋果"></div>
+      </div>
+      <div class="hud-card hud-score">
+        <span class="lbl">分數</span>
+        <div class="big-row"><b id="scoreNow">—</b><span class="stars" id="scoreStars"></span></div>
+      </div>
+      <div class="hud-card hud-hand">
+        <span class="lbl" id="handLbl">現在用</span>
+        <b class="hand-now" id="handNow">右手</b>
+        <div class="seq-dots" id="seqDots" aria-label="這一回的手指順序"></div>
+      </div>
+      <div class="hud-card hud-combo">
+        <span class="lbl">連擊</span>
+        <div class="big-row"><b id="comboNow">—</b><span>下</span></div>
+      </div>
+      <div class="gauge" aria-hidden="true">
+        <span class="gauge-lbl">手臂高度</span>
+        <div class="gauge-track">
+          <div class="gauge-fill" id="gaugeFill"></div>
+          <div class="gauge-target" id="gaugeTarget"><span>目標</span></div>
+        </div>
+      </div>
+      <button id="pauseBtn" class="pause-btn">暫停</button>
+    </div>
+
+    <aside class="check-panel" id="checkPanel" aria-live="polite">
+      <h2>位置檢查</h2>
+      <ul class="check-list" id="checkList"></ul>
+      <div class="countdown" id="countdown"><span id="countdownNum">…</span></div>
+      <p class="check-foot" id="checkFoot">全部確認後自動開始</p>
+    </aside>
+
+    <div class="bottom-bar">
+      <button id="painBtn" class="pain-btn">會痛就按這裡</button>
+      <div class="privacy">影像只在這台電腦上處理</div>
+      <div class="bubble" id="bubble" aria-live="polite">
+        <svg class="spk" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="26" fill="#2E6B4E"/><path d="M15 21 H22 L31 13 V39 L22 31 H15 Z" fill="#FFFFFF"/></svg>
+        <span id="bubbleText">請側身坐好，讓我看到您的手臂</span>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay" hidden>
+      <div class="overlay-card">
+        <h2 id="ovTitle"></h2>
+        <p id="ovText"></p>
+        <div class="ov-actions" id="ovActions"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 結算 -->
+  <section id="screen-result" class="screen result" hidden>
+    <div class="result-card">
+      <h1 id="resTitle">太棒了！</h1>
+      <p class="res-sub" id="resSub"></p>
+      <div class="res-stars" id="resStars" aria-hidden="true"></div>
+      <div class="res-rewards" id="resRewards"></div>
+      <div class="res-body">
+        <div class="ring">
+          <svg viewBox="0 0 320 320" aria-hidden="true">
+            <circle cx="160" cy="160" r="140" fill="none" stroke="#E6EBE7" stroke-width="30"/>
+            <circle id="ringFg" cx="160" cy="160" r="140" fill="none" stroke="#2E6B4E" stroke-width="30" stroke-linecap="round" stroke-dasharray="0 880" transform="rotate(-90 160 160)"/>
+          </svg>
+          <div class="ring-num"><b id="resTotal">0</b><span>總分</span></div>
+        </div>
+        <div class="bars" id="resBars"></div>
+      </div>
+      <p class="res-chip" id="resChip"></p>
+      <div class="res-actions">
+        <button class="btn-primary" id="againBtn">再玩一次</button>
+        <button class="btn-outline" id="resHomeBtn">回首頁</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<video id="video" class="hidden-video" playsinline muted></video>
+
+<script src="js/angle.js"></script>
+<script src="exercises/shoulder-flexion.js"></script>
+<script src="exercises/cross-tap.js"></script>
+<script src="exercises/finger-tap.js"></script>
+<script src="exercises/knee-lift.js"></script>
+<script src="exercises/finger-bend.js"></script>
+<script src="exercises/front-kick.js"></script>
+<script src="js/exercise.js"></script>
+<script src="js/drum.js"></script>
+<script src="js/piano.js"></script>
+<script src="js/bike.js"></script>
+<script src="js/duet.js"></script>
+<script src="js/soccer.js"></script>
+<script src="js/demo-pose.js"></script>
+<script src="js/demo-drum.js"></script>
+<script src="js/demo-hand.js"></script>
+<script src="js/demo-bike.js"></script>
+<script src="js/demo-duet.js"></script>
+<script src="js/demo-soccer.js"></script>
+<script src="js/pose.js"></script>
+<script src="js/voice.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/stats.js"></script>
+<script src="js/garden.js"></script>
+<script src="js/music.js"></script>
+<script src="js/game-apple.js"></script>
+<script src="js/drum-scene.js"></script>
+<script src="js/piano-scene.js"></script>
+<script src="js/bike-scene.js"></script>
+<script src="js/duet-scene.js"></script>
+<script src="js/soccer-scene.js"></script>
+<script src="js/games/apple.js"></script>
+<script src="js/games/drum.js"></script>
+<script src="js/games/piano.js"></script>
+<script src="js/games/bike.js"></script>
+<script src="js/games/duet.js"></script>
+<script src="js/games/soccer.js"></script>
+<script src="js/tutorial.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
