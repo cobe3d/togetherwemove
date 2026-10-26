@@ -1,0 +1,907 @@
+<title>回春動動規劃書</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: single reading column (max 1080px) with full-width screen mockups framed like a monitor; sections separated by hairlines. */
+:root {
+  --bg: #F5F8F4;
+  --surface: #FFFFFF;
+  --ink: #1B2620;
+  --muted: #56665D;
+  --line: #D9E3DC;
+  --accent: #2E6B4E;
+  --accent-soft: #E2EFE6;
+  --apple: #C4412F;
+  --apple-soft: #FBE7E3;
+  --sun: #B97B0E;
+  --sun-soft: #FDF1D8;
+  --sky: #4F7396;
+  --frame: #24302A;
+  --w-range: #2E6B4E;
+  --w-form: #4C9C62;
+  --w-hold: #E0A126;
+  --w-tempo: #6C8FB3;
+  --font-display: "LXGW WenKai TC", "Kaiti TC", "DFKai-SB", "BiauKai", serif;
+  --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", "Heiti TC", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111814; --surface: #18211C; --ink: #E6EEE8; --muted: #9DB0A5; --line: #2A3730;
+    --accent: #7FC79E; --accent-soft: #1D2E24; --apple: #F08371; --apple-soft: #3A201C;
+    --sun: #F0BE5A; --sun-soft: #352A14; --sky: #9DBBD8; --frame: #050806;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111814; --surface: #18211C; --ink: #E6EEE8; --muted: #9DB0A5; --line: #2A3730;
+  --accent: #7FC79E; --accent-soft: #1D2E24; --apple: #F08371; --apple-soft: #3A201C;
+  --sun: #F0BE5A; --sun-soft: #352A14; --sky: #9DBBD8; --frame: #050806;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.75;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 64px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; }
+h1, h2, h3 { text-wrap: balance; margin: 0; line-height: 1.3; }
+h2 { font-family: var(--font-display); font-size: 2.1rem; font-weight: 700; }
+h3 { font-size: 1.15rem; font-weight: 700; }
+p { margin: 0; max-width: 66ch; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; border-radius: 6px; }
+code, .mono { font-family: var(--font-mono); font-size: 0.88em; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+
+/* Hero */
+.hero { padding-block: 56px 28px; display: grid; gap: 18px; }
+.hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 7vw, 4.4rem); font-weight: 700; color: var(--accent); letter-spacing: 0.02em; }
+.hero h1 small { display: block; font-family: var(--font-body); font-size: 0.36em; font-weight: 500; color: var(--ink); letter-spacing: 0; margin-top: 6px; }
+.lede { font-size: 1.12rem; color: var(--ink); }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 8px; }
+.fact { background: var(--accent-soft); border-radius: 14px; padding: 16px 18px; display: grid; gap: 4px; min-width: 0; }
+.fact b { font-size: 1.05rem; }
+.fact span { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
+.toc { display: flex; flex-wrap: wrap; gap: 8px; padding-block: 8px 24px; }
+.toc a { text-decoration: none; color: var(--ink); border: 1px solid var(--line); background: var(--surface); padding: 4px 14px; border-radius: 999px; font-size: 0.92rem; }
+.toc a:hover { border-color: var(--accent); color: var(--accent); }
+
+section { padding-block: 48px; border-top: 1px solid var(--line); display: grid; gap: 22px; }
+.section-head { display: grid; gap: 8px; }
+.section-head p { color: var(--muted); }
+
+/* Comparison */
+.compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.compare > div { border: 1px solid var(--line); border-radius: 16px; padding: 20px; background: var(--surface); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.compare .ours { border: 2px solid var(--accent); }
+.compare ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; }
+
+/* Flow steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; counter-reset: step; }
+.steps li { counter-increment: step; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 2px; min-width: 0; }
+.steps li::before { content: counter(step); font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); }
+.steps b { font-size: 1.02rem; }
+.steps span { font-size: 0.9rem; color: var(--muted); line-height: 1.55; }
+.steps .once { border-style: dashed; }
+
+/* Mockups */
+.mock { margin: 0; display: grid; gap: 12px; min-width: 0; }
+.screen { background: var(--frame); padding: 10px; border-radius: 18px; max-width: 100%; }
+.screen svg { display: block; width: 100%; height: auto; border-radius: 9px; }
+.screen svg text { font-family: var(--font-body); }
+.screen svg .disp { font-family: var(--font-display); }
+.mock figcaption { display: grid; gap: 4px; }
+.mock figcaption b { font-size: 1.05rem; }
+.mock figcaption span { color: var(--muted); font-size: 0.95rem; }
+.tag { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); letter-spacing: 0.06em; }
+.mock-main { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 24px; align-items: start; }
+.legend { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; counter-reset: lg; }
+.legend li { counter-increment: lg; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start; font-size: 0.95rem; line-height: 1.6; }
+.legend li::before { content: counter(lg); width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: var(--bg); font-family: var(--font-mono); font-size: 0.8rem; display: grid; place-items: center; margin-top: 1px; }
+.legend b { display: block; }
+.mock-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; }
+
+/* Scoring */
+.weights { display: flex; height: 52px; border-radius: 12px; overflow: hidden; font-size: 0.92rem; font-weight: 700; color: #FFFFFF; }
+.weights div { display: flex; align-items: center; justify-content: center; padding: 0 8px; white-space: nowrap; min-width: 0; overflow: hidden; }
+.w-range { flex: 40; background: var(--w-range); }
+.w-form { flex: 30; background: var(--w-form); }
+.w-hold { flex: 20; background: var(--w-hold); color: #2B1E00; }
+.w-tempo { flex: 10; background: var(--w-tempo); }
+.rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.rule { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; background: var(--surface); display: grid; gap: 6px; min-width: 0; }
+.rule .pts { font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted); }
+.rule p { font-size: 0.96rem; line-height: 1.65; }
+.callout { background: var(--sun-soft); border-radius: 16px; padding: 18px 22px; display: grid; gap: 6px; }
+.callout b { color: var(--sun); }
+.diagram { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+.diagram svg { display: block; min-width: 680px; width: 100%; height: auto; }
+.sm-box { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 2; }
+.sm-goal { fill: var(--sun-soft); stroke: var(--sun); stroke-width: 2; }
+.sm-t { fill: var(--ink); font-family: var(--font-body); font-size: 22px; font-weight: 700; }
+.sm-s { fill: var(--muted); font-family: var(--font-body); font-size: 16px; }
+.sm-arrow { stroke: var(--muted); stroke-width: 2.5; fill: none; }
+.sm-head { fill: var(--muted); }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 0.95rem; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; line-height: 1.6; }
+th { background: var(--accent-soft); font-weight: 700; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pill { display: inline-block; font-size: 0.78rem; padding: 1px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 700; white-space: nowrap; }
+.pill.later { background: var(--line); color: var(--muted); }
+
+/* Principles */
+.principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.principles div { padding: 16px 0 0; border-top: 2px solid var(--accent); display: grid; gap: 6px; min-width: 0; }
+.principles p { font-size: 0.95rem; color: var(--muted); line-height: 1.65; }
+
+/* Architecture */
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.node { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; display: grid; gap: 0; min-width: 0; }
+.node b { font-size: 0.98rem; }
+.node span { font-size: 0.82rem; color: var(--muted); }
+.node.local { border-color: var(--accent); }
+.arrow { color: var(--muted); font-size: 1.1rem; }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.two > div { display: grid; gap: 10px; align-content: start; min-width: 0; }
+pre { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.65; color: var(--ink); }
+pre .c { color: var(--muted); }
+
+/* Roadmap */
+.phases { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.phase { border: 1px solid var(--line); border-radius: 16px; padding: 20px; background: var(--surface); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.phase.now { border: 2px solid var(--accent); }
+.phase header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.phase h3 { font-family: var(--font-display); font-size: 1.5rem; }
+.phase .time { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+.phase ul { margin: 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: 0.95rem; }
+
+.risks { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.risks li { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.risks li:last-child { border-bottom: 0; }
+.risks span { color: var(--muted); }
+.ask { display: grid; gap: 12px; margin: 0; padding-left: 1.3em; }
+.ask li { padding-left: 4px; }
+.ask li span { color: var(--muted); display: block; font-size: 0.95rem; }
+footer { padding-block: 32px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.88rem; }
+
+@media (max-width: 860px) {
+  .mock-main { grid-template-columns: minmax(0, 1fr); }
+  .legend { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .phases, .principles { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 680px) {
+  body { font-size: 16px; }
+  .facts, .compare, .mock-grid, .rules, .two, .legend { grid-template-columns: minmax(0, 1fr); }
+  .risks li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .weights { font-size: 0.78rem; }
+  .screen { padding: 6px; border-radius: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+html { scroll-behavior: smooth; }
+</style>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">產品規劃 · 草案 v0.1 · 2026-10-17</div>
+  <h1>回春動動<small>用電腦鏡頭陪長輩做復健的評分小遊戲</small></h1>
+  <p class="lede">長輩坐在電腦前，跟著語音做復健動作。鏡頭即時看出動作做得夠不夠確實，每做一下就計分，並把動作變成摘果子、打鼓這類小遊戲。家屬與治療師可以看到每天的紀錄和進步曲線。</p>
+  <div class="facts">
+    <div class="fact"><b>即時判斷每一下</b><span>每秒約 30 張畫面，持續追蹤關節角度，不用按鈕拍照。</span></div>
+    <div class="fact"><b>影像不離開電腦</b><span>骨架偵測在瀏覽器裡完成，不上傳影片，家屬比較放心。</span></div>
+    <div class="fact"><b>沒有「失敗」</b><span>目標依長輩自己的能力設定，只有「再試一次」，不會被打低分。</span></div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="目錄">
+  <a href="#concept">產品概念</a>
+  <a href="#flow">使用流程</a>
+  <a href="#screens">畫面示意圖</a>
+  <a href="#scoring">評分邏輯</a>
+  <a href="#games">遊戲與動作</a>
+  <a href="#ux">長輩介面原則</a>
+  <a href="#tech">技術架構</a>
+  <a href="#roadmap">開發階段</a>
+  <a href="#risks">限制與風險</a>
+  <a href="#decide">待決定事項</a>
+</nav>
+
+<section id="concept">
+  <div class="section-head">
+    <h2>產品概念</h2>
+    <p>參考範例「長照智能 OT 復健助手」：有動作選單、示範圖、語音引導與高對比模式，但判斷方式是按一下按鈕、拍一張照片給 AI 看。回春動動保留它對長輩友善的部分，把判斷改成連續、即時的。</p>
+  </div>
+  <div class="compare">
+    <div>
+      <h3>範例的做法</h3>
+      <ul>
+        <li>擺好姿勢後按「開始 AI 評估」</li>
+        <li>拍一張照片，送給雲端 AI 判斷</li>
+        <li>得到一段文字回饋</li>
+        <li>看不出動作過程、無法計次</li>
+      </ul>
+    </div>
+    <div class="ours">
+      <h3>回春動動的做法</h3>
+      <ul>
+        <li>開始後自動偵測，不用再按按鈕</li>
+        <li>在電腦上即時算出肩、肘、髖等關節角度</li>
+        <li>每完成一下就計次、評分、給語音回饋</li>
+        <li>角度與分數存下來，畫成進步曲線</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="flow">
+  <div class="section-head">
+    <h2>使用流程</h2>
+    <p>長輩從開啟到完成一次運動，只需要按一次「開始」。虛線框的步驟只在第一次使用時出現。</p>
+  </div>
+  <ol class="steps">
+    <li><b>選遊戲</b><span>首頁四張大卡片，今日推薦放第一張</span></li>
+    <li><b>位置檢查</b><span>確認光線、身體都在鏡頭內</span></li>
+    <li class="once"><b>能力測量</b><span>做 3 下，記下個人最大角度</span></li>
+    <li><b>遊戲</b><span>做 10 下，每一下即時計分</span></li>
+    <li><b>結算</b><span>星星、分數、和上次比較</span></li>
+    <li><b>紀錄</b><span>自動存檔，家屬與治療師查看</span></li>
+  </ol>
+</section>
+
+<section id="screens">
+  <div class="section-head">
+    <h2>畫面示意圖</h2>
+    <p>以 MVP 的「肩關節前舉＋摘果子」為例。字級、按鈕都以 1.5 公尺外看得清楚為準。畫面中的姓名與數字都是示意資料。</p>
+  </div>
+
+  <figure class="mock">
+    <div class="mock-main">
+      <div class="screen">
+<svg viewBox="0 0 1600 1000" role="img" aria-label="遊戲中畫面：長輩側身坐著舉手摘蘋果，畫面上有骨架線、角度 142 度、次數 6/10、分數 86">
+  <defs>
+    <linearGradient id="camC" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A4B52"/><stop offset="1" stop-color="#222C31"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#camC)"/>
+  <rect x="120" y="150" width="300" height="220" rx="6" fill="#58707A" fill-opacity=".45"/>
+  <path d="M270 150 V370 M120 260 H420" stroke="#3A4B52" stroke-width="10"/>
+  <rect x="0" y="890" width="1600" height="110" fill="#1D262A"/>
+  <!-- tree -->
+  <path d="M1195 890 H1265 L1240 520 H1200 Z" fill="#6B4A32"/>
+  <path d="M1215 570 Q1010 430 860 262" stroke="#6B4A32" stroke-width="26" fill="none" stroke-linecap="round"/>
+  <circle cx="1220" cy="370" r="200" fill="#3E8A55"/>
+  <circle cx="1080" cy="300" r="130" fill="#4C9C62"/>
+  <circle cx="1370" cy="330" r="150" fill="#4C9C62"/>
+  <circle cx="1250" cy="200" r="140" fill="#45935B"/>
+  <circle cx="925" cy="255" r="88" fill="#4C9C62"/>
+  <g fill="#D64533">
+    <circle cx="1120" cy="262" r="24"/><circle cx="1300" cy="232" r="24"/><circle cx="1390" cy="390" r="24"/>
+    <circle cx="1200" cy="430" r="24"/><circle cx="1050" cy="390" r="24"/><circle cx="1280" cy="340" r="24"/>
+  </g>
+  <!-- chair -->
+  <rect x="548" y="470" width="24" height="262" rx="6" fill="#6B4F3A"/>
+  <rect x="556" y="706" width="196" height="26" rx="8" fill="#6B4F3A"/>
+  <path d="M572 732 V890 M738 732 V890" stroke="#6B4F3A" stroke-width="12"/>
+  <!-- person, side view facing right -->
+  <path d="M625 495 L650 610 L720 650" stroke="#587796" stroke-width="34" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M630 490 L640 700" stroke="#6C8FB3" stroke-width="72" stroke-linecap="round"/>
+  <path d="M640 700 L790 705" stroke="#44566B" stroke-width="56" stroke-linecap="round"/>
+  <path d="M790 705 L795 870" stroke="#44566B" stroke-width="48" stroke-linecap="round"/>
+  <path d="M797 878 L858 882" stroke="#2A2F33" stroke-width="26" stroke-linecap="round"/>
+  <path d="M640 452 L635 482" stroke="#F1C9A5" stroke-width="28" stroke-linecap="round"/>
+  <circle cx="650" cy="408" r="46" fill="#F1C9A5"/>
+  <path d="M605 412 A46 46 0 0 1 690 386 Q668 366 646 370 Q618 372 605 412Z" fill="#CFCFCF"/>
+  <path d="M630 480 L722 362 L808 252" stroke="#6C8FB3" stroke-width="36" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="822" cy="234" r="20" fill="#F1C9A5"/>
+  <!-- skeleton overlay -->
+  <g stroke="#7CF0B0" stroke-width="6" stroke-linecap="round" fill="none">
+    <path d="M660 404 L630 480 L722 362 L808 252"/>
+    <path d="M630 480 L640 700 L790 705 L795 870"/>
+  </g>
+  <g fill="#7CF0B0" stroke="#10331F" stroke-width="3">
+    <circle cx="660" cy="404" r="9"/><circle cx="630" cy="480" r="11"/><circle cx="722" cy="362" r="10"/>
+    <circle cx="808" cy="252" r="10"/><circle cx="640" cy="700" r="10"/><circle cx="790" cy="705" r="10"/><circle cx="795" cy="870" r="10"/>
+  </g>
+  <!-- angle -->
+  <path d="M630 480 L630 560 A80 80 0 0 0 679 417 Z" fill="#F2B33D" fill-opacity=".35" stroke="#F2B33D" stroke-width="4"/>
+  <rect x="690" y="520" width="124" height="58" rx="29" fill="#F2B33D"/>
+  <text x="752" y="561" font-size="34" font-weight="700" fill="#1F2A24" text-anchor="middle">142°</text>
+  <path d="M630 480 L812 166" stroke="#FFFFFF" stroke-opacity=".85" stroke-width="4" stroke-dasharray="14 10"/>
+  <rect x="628" y="128" width="160" height="50" rx="25" fill="#FFFFFF" fill-opacity=".18"/>
+  <text x="708" y="162" font-size="26" fill="#FFFFFF" text-anchor="middle">目標 150°</text>
+  <!-- target apple with hold ring -->
+  <circle cx="790" cy="203" r="54" fill="none" stroke="#FFFFFF" stroke-opacity=".25" stroke-width="8"/>
+  <circle cx="790" cy="203" r="54" fill="none" stroke="#FFE08A" stroke-width="8" stroke-dasharray="226 340" stroke-linecap="round" transform="rotate(-90 790 203)"/>
+  <circle cx="790" cy="206" r="30" fill="#E0412F"/>
+  <circle cx="780" cy="196" r="8" fill="#FFFFFF" fill-opacity=".5"/>
+  <path d="M790 178 L794 166" stroke="#6B4A32" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="806" cy="170" rx="12" ry="6" fill="#4C9C62" transform="rotate(-20 806 170)"/>
+  <rect x="862" y="178" width="170" height="52" rx="26" fill="#FFE08A"/>
+  <text x="947" y="214" font-size="28" font-weight="700" fill="#5A4100" text-anchor="middle">再撐 1 秒</text>
+  <!-- HUD: reps -->
+  <rect x="40" y="40" width="330" height="170" rx="24" fill="#FFFFFF"/>
+  <text x="70" y="90" font-size="28" fill="#5B6B62">次數</text>
+  <text x="68" y="186" font-size="96" font-weight="700" fill="#2E6B4E">6</text>
+  <text x="138" y="182" font-size="40" fill="#1F2A24">/ 10 下</text>
+  <g fill="#D64533"><circle cx="262" cy="80" r="11"/><circle cx="292" cy="80" r="11"/><circle cx="322" cy="80" r="11"/></g>
+  <!-- HUD: score -->
+  <rect x="1230" y="40" width="330" height="170" rx="24" fill="#FFFFFF"/>
+  <text x="1260" y="90" font-size="28" fill="#5B6B62">分數</text>
+  <text x="1258" y="186" font-size="96" font-weight="700" fill="#D64533">86</text>
+  <g fill="#F2B33D">
+    <path d="M0,-1 L.247,-.34 L.951,-.309 L.399,.13 L.588,.809 L0,.42 L-.588,.809 L-.399,.13 L-.951,-.309 L-.247,-.34Z" transform="translate(1430 150) scale(24)"/>
+    <path d="M0,-1 L.247,-.34 L.951,-.309 L.399,.13 L.588,.809 L0,.42 L-.588,.809 L-.399,.13 L-.951,-.309 L-.247,-.34Z" transform="translate(1490 150) scale(24)"/>
+  </g>
+  <!-- HUD: arm height gauge -->
+  <text x="40" y="282" font-size="26" fill="#FFFFFF">手臂高度</text>
+  <rect x="60" y="310" width="70" height="480" rx="35" fill="#FFFFFF" fill-opacity=".18"/>
+  <rect x="60" y="384" width="70" height="406" rx="35" fill="#7CF0B0"/>
+  <path d="M46 350 H144" stroke="#FFE08A" stroke-width="6" stroke-linecap="round"/>
+  <text x="156" y="360" font-size="26" fill="#FFE08A" font-weight="700">目標</text>
+  <!-- bottom bar -->
+  <rect x="40" y="900" width="360" height="80" rx="40" fill="#D64533"/>
+  <text x="220" y="953" font-size="34" font-weight="700" fill="#FFFFFF" text-anchor="middle">會痛就按這裡</text>
+  <rect x="430" y="916" width="420" height="48" rx="24" fill="#000000" fill-opacity=".35"/>
+  <text x="640" y="948" font-size="24" fill="#FFFFFF" text-anchor="middle">影像只在這台電腦上處理</text>
+  <rect x="880" y="900" width="680" height="80" rx="40" fill="#FFFFFF"/>
+  <circle cx="932" cy="940" r="26" fill="#2E6B4E"/>
+  <path d="M921 932 H929 L939 923 V957 L929 948 H921 Z" fill="#FFFFFF"/>
+  <text x="976" y="952" font-size="36" font-weight="700" fill="#1F2A24">再高一點點，就摘到了！</text>
+  <!-- annotation markers -->
+  <g font-size="22" font-weight="700" text-anchor="middle">
+    <circle cx="370" cy="40" r="22" fill="#1F2A24" stroke="#FFFFFF" stroke-width="3"/><text x="370" y="48" fill="#FFFFFF">1</text>
+    <circle cx="1230" cy="40" r="22" fill="#1F2A24" stroke="#FFFFFF" stroke-width="3"/><text x="1230" y="48" fill="#FFFFFF">2</text>
+    <circle cx="690" cy="520" r="22" fill="#1F2A24" stroke="#FFFFFF" stroke-width="3"/><text x="690" y="528" fill="#FFFFFF">3</text>
+    <circle cx="744" cy="160" r="22" fill="#1F2A24" stroke="#FFFFFF" stroke-width="3"/><text x="744" y="168" fill="#FFFFFF">4</text>
+    <circle cx="130" cy="310" r="22" fill="#1F2A24" stroke="#FFFFFF" stroke-width="3"/><text x="130" y="318" fill="#FFFFFF">5</text>
+    <circle cx="880" cy="900" r="22" fill="#1F2A24" stroke="#FFFFFF" stroke-width="3"/><text x="880" y="908" fill="#FFFFFF">6</text>
+    <circle cx="40" cy="900" r="22" fill="#1F2A24" stroke="#FFFFFF" stroke-width="3"/><text x="40" y="908" fill="#FFFFFF">7</text>
+  </g>
+</svg>
+      </div>
+      <ol class="legend" aria-label="畫面 C 標示說明">
+        <li><div><b>次數</b>做到第幾下，蘋果代表已摘下的數量。</div></li>
+        <li><div><b>分數</b>本回合平均分，星星隨分數增加。</div></li>
+        <li><div><b>即時角度</b>髖、肩、肘三點的夾角，骨架線畫在長輩身上。</div></li>
+        <li><div><b>目標蘋果</b>掛在個人目標角度的位置，外圈是「撐住 2 秒」的倒數。</div></li>
+        <li><div><b>手臂高度條</b>不看數字也知道還差多少。</div></li>
+        <li><div><b>語音提示</b>同一句話會用語音念出來。</div></li>
+        <li><div><b>會痛就按這裡</b>隨時停止，並記錄在紀錄頁。</div></li>
+      </ol>
+    </div>
+    <figcaption>
+      <span class="tag">畫面 C · 主要畫面</span>
+      <b>遊戲中：摘果子（肩關節前舉）</b>
+      <span>長輩側身坐，鏡頭從側面看手臂抬多高。手到達目標角度並撐住 2 秒，蘋果就掉進籃子。</span>
+    </figcaption>
+  </figure>
+
+  <div class="mock-grid">
+    <figure class="mock">
+      <div class="screen">
+<svg viewBox="0 0 1600 1000" role="img" aria-label="首頁示意圖：問候語、四張遊戲卡片與今日進度">
+  <rect width="1600" height="1000" fill="#F1F6F1"/>
+  <rect width="1600" height="96" fill="#2E6B4E"/>
+  <circle cx="66" cy="48" r="26" fill="#F2B33D"/>
+  <path d="M56 58 Q64 30 82 36 Q76 60 56 58Z" fill="#2E6B4E"/>
+  <text x="108" y="61" font-size="36" font-weight="700" fill="#FFFFFF" class="disp">回春動動</text>
+  <rect x="1050" y="24" width="200" height="48" rx="24" fill="#245840"/>
+  <text x="1150" y="57" font-size="26" fill="#FFFFFF" text-anchor="middle">語音引導：開</text>
+  <circle cx="1310" cy="48" r="26" fill="#FCE3C8"/>
+  <text x="1350" y="58" font-size="28" fill="#FFFFFF">王奶奶，早安</text>
+  <text x="80" y="200" font-size="58" font-weight="700" fill="#1F2A24" class="disp">今天也來動一動吧！</text>
+  <text x="80" y="254" font-size="28" fill="#5B6B62">選一個遊戲，跟著聲音做就可以了</text>
+  <rect x="80" y="284" width="270" height="56" rx="28" fill="#FFF1D6"/>
+  <circle cx="112" cy="312" r="10" fill="#E8A21E"/>
+  <text x="134" y="322" font-size="26" font-weight="700" fill="#8A5A0B">連續運動 14 天</text>
+  <rect x="1120" y="130" width="400" height="220" rx="24" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <text x="1150" y="184" font-size="30" font-weight="700" fill="#1F2A24">回春花園</text>
+  <text x="1150" y="226" font-size="24" fill="#5B6B62">再運動 1 天就開花</text>
+  <rect x="1150" y="252" width="200" height="16" rx="8" fill="#DCE4DE"/>
+  <rect x="1150" y="252" width="180" height="16" rx="8" fill="#4C9C62"/>
+  <path d="M1395 290 H1475 L1462 335 H1408 Z" fill="#C77A4A"/>
+  <path d="M1435 290 V196" stroke="#3E8A55" stroke-width="6"/>
+  <ellipse cx="1415" cy="252" rx="22" ry="10" fill="#4C9C62" transform="rotate(-30 1415 252)"/>
+  <ellipse cx="1456" cy="232" rx="22" ry="10" fill="#4C9C62" transform="rotate(30 1456 232)"/>
+  <circle cx="1435" cy="188" r="14" fill="#F4A6B8"/>
+  <!-- card 1 -->
+  <rect x="80" y="390" width="345" height="490" rx="28" fill="#FFFFFF" stroke="#2E6B4E" stroke-width="4"/>
+  <rect x="100" y="410" width="305" height="200" rx="20" fill="#E4F1E7"/>
+  <rect x="242" y="520" width="22" height="78" fill="#6B4A32"/>
+  <circle cx="253" cy="495" r="62" fill="#4C9C62"/>
+  <g fill="#D64533"><circle cx="225" cy="480" r="11"/><circle cx="272" cy="468" r="11"/><circle cx="255" cy="515" r="11"/><circle cx="288" cy="505" r="11"/></g>
+  <rect x="112" y="422" width="130" height="40" rx="20" fill="#F2B33D"/>
+  <text x="177" y="450" font-size="22" font-weight="700" fill="#4A3300" text-anchor="middle">今日推薦</text>
+  <text x="100" y="672" font-size="42" font-weight="700" fill="#1F2A24">摘果子</text>
+  <text x="100" y="714" font-size="26" fill="#5B6B62">肩關節前舉</text>
+  <text x="100" y="754" font-size="24" fill="#5B6B62">約 5 分鐘 · 10 下</text>
+  <rect x="100" y="784" width="305" height="72" rx="36" fill="#2E6B4E"/>
+  <text x="252.5" y="831" font-size="32" font-weight="700" fill="#FFFFFF" text-anchor="middle">開始</text>
+  <!-- card 2 -->
+  <rect x="455" y="390" width="345" height="490" rx="28" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <rect x="475" y="410" width="305" height="200" rx="20" fill="#FDEFD9"/>
+  <ellipse cx="627" cy="552" rx="80" ry="22" fill="#C9573F"/>
+  <rect x="547" y="492" width="160" height="60" fill="#E06D4F"/>
+  <ellipse cx="627" cy="492" rx="80" ry="22" fill="#F7E1C4" stroke="#C9573F" stroke-width="4"/>
+  <path d="M578 440 L614 486 M682 436 L646 484" stroke="#6B4A32" stroke-width="8" stroke-linecap="round"/>
+  <text x="475" y="672" font-size="42" font-weight="700" fill="#1F2A24">打鼓</text>
+  <text x="475" y="714" font-size="26" fill="#5B6B62">跨體拍肩</text>
+  <text x="475" y="754" font-size="24" fill="#5B6B62">約 5 分鐘 · 12 下</text>
+  <rect x="475" y="784" width="305" height="72" rx="36" fill="#2E6B4E"/>
+  <text x="627.5" y="831" font-size="32" font-weight="700" fill="#FFFFFF" text-anchor="middle">開始</text>
+  <!-- card 3 -->
+  <rect x="830" y="390" width="345" height="490" rx="28" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <rect x="850" y="410" width="305" height="200" rx="20" fill="#E3ECF7"/>
+  <rect x="902" y="456" width="200" height="110" rx="8" fill="#FFFFFF" stroke="#3B4A5A" stroke-width="4"/>
+  <path d="M927 456 V566 M952 456 V566 M977 456 V566 M1002 456 V566 M1027 456 V566 M1052 456 V566 M1077 456 V566" stroke="#3B4A5A" stroke-width="2"/>
+  <g fill="#2A3440"><rect x="920" y="456" width="14" height="62"/><rect x="945" y="456" width="14" height="62"/><rect x="995" y="456" width="14" height="62"/><rect x="1020" y="456" width="14" height="62"/><rect x="1045" y="456" width="14" height="62"/></g>
+  <text x="850" y="672" font-size="42" font-weight="700" fill="#1F2A24">彈鋼琴</text>
+  <text x="850" y="714" font-size="26" fill="#5B6B62">手指對指</text>
+  <text x="850" y="754" font-size="24" fill="#5B6B62">約 3 分鐘 · 每手 5 回</text>
+  <rect x="850" y="784" width="305" height="72" rx="36" fill="#2E6B4E"/>
+  <text x="1002.5" y="831" font-size="32" font-weight="700" fill="#FFFFFF" text-anchor="middle">開始</text>
+  <!-- card 4 (locked) -->
+  <rect x="1205" y="390" width="345" height="490" rx="28" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <rect x="1225" y="410" width="305" height="200" rx="20" fill="#EEF0EE"/>
+  <g stroke="#9AA59E" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="1317" cy="540" r="40"/><circle cx="1437" cy="540" r="40"/>
+    <path d="M1317 540 L1365 478 L1437 540 M1365 478 H1412 M1345 462 H1380 M1412 478 L1420 455 H1440"/>
+  </g>
+  <rect x="1237" y="422" width="120" height="40" rx="20" fill="#DCE4DE"/>
+  <text x="1297" y="450" font-size="22" font-weight="700" fill="#5B6B62" text-anchor="middle">V1 開放</text>
+  <text x="1225" y="672" font-size="42" font-weight="700" fill="#8A968F">騎單車</text>
+  <text x="1225" y="714" font-size="26" fill="#8A968F">坐姿抬腿</text>
+  <text x="1225" y="754" font-size="24" fill="#8A968F">約 5 分鐘 · 左右各 10 下</text>
+  <rect x="1225" y="784" width="305" height="72" rx="36" fill="#E6EBE7"/>
+  <text x="1377.5" y="831" font-size="32" font-weight="700" fill="#8A968F" text-anchor="middle">即將推出</text>
+  <!-- progress -->
+  <text x="80" y="954" font-size="28" font-weight="700" fill="#1F2A24">今日進度</text>
+  <rect x="230" y="930" width="1040" height="30" rx="15" fill="#DCE4DE"/>
+  <rect x="230" y="930" width="347" height="30" rx="15" fill="#2E6B4E"/>
+  <text x="1300" y="955" font-size="28" fill="#1F2A24">1 / 3 項完成</text>
+</svg>
+      </div>
+      <figcaption>
+        <span class="tag">畫面 A</span>
+        <b>首頁：選遊戲</b>
+        <span>四張大卡片，一張一個動作。今日推薦放第一張並加粗框線，花園進度鼓勵每天回來。</span>
+      </figcaption>
+    </figure>
+
+    <figure class="mock">
+      <div class="screen">
+<svg viewBox="0 0 1600 1000" role="img" aria-label="位置檢查畫面：鏡頭中的長輩側身坐在框內，右側清單確認光線與身體位置，倒數 3 秒">
+  <defs>
+    <linearGradient id="camB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3A4B52"/><stop offset="1" stop-color="#222C31"/>
+    </linearGradient>
+    <clipPath id="clipB"><rect x="40" y="126" width="1000" height="834" rx="24"/></clipPath>
+  </defs>
+  <rect width="1600" height="1000" fill="#F1F6F1"/>
+  <rect width="1600" height="96" fill="#2E6B4E"/>
+  <text x="40" y="61" font-size="36" font-weight="700" fill="#FFFFFF" class="disp">準備開始 · 摘果子</text>
+  <g clip-path="url(#clipB)">
+    <rect x="40" y="126" width="1000" height="834" fill="url(#camB)"/>
+    <rect x="40" y="800" width="1000" height="160" fill="#1D262A"/>
+    <rect x="420" y="400" width="22" height="252" rx="6" fill="#6B4F3A"/>
+    <rect x="428" y="628" width="184" height="24" rx="8" fill="#6B4F3A"/>
+    <path d="M444 652 V800 M598 652 V800" stroke="#6B4F3A" stroke-width="12"/>
+    <path d="M500 410 L510 620" stroke="#6C8FB3" stroke-width="66" stroke-linecap="round"/>
+    <path d="M510 622 L660 628" stroke="#44566B" stroke-width="54" stroke-linecap="round"/>
+    <path d="M660 628 L665 790" stroke="#44566B" stroke-width="46" stroke-linecap="round"/>
+    <path d="M667 796 L724 800" stroke="#2A2F33" stroke-width="24" stroke-linecap="round"/>
+    <path d="M502 415 L522 535 L600 572" stroke="#587796" stroke-width="32" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="612" cy="576" r="16" fill="#F1C9A5"/>
+    <path d="M512 370 L506 400" stroke="#F1C9A5" stroke-width="26" stroke-linecap="round"/>
+    <circle cx="522" cy="330" r="44" fill="#F1C9A5"/>
+    <path d="M479 334 A44 44 0 0 1 560 308 Q540 290 520 293 Q490 296 479 334Z" fill="#CFCFCF"/>
+    <g stroke="#7CF0B0" stroke-width="6" stroke-linecap="round" fill="none">
+      <path d="M530 326 L502 412 L522 535 L600 572"/><path d="M502 412 L510 620 L660 628 L665 790"/>
+    </g>
+    <g fill="#7CF0B0" stroke="#10331F" stroke-width="3">
+      <circle cx="530" cy="326" r="9"/><circle cx="502" cy="412" r="10"/><circle cx="522" cy="535" r="10"/><circle cx="600" cy="572" r="10"/>
+      <circle cx="510" cy="620" r="10"/><circle cx="660" cy="628" r="10"/><circle cx="665" cy="790" r="10"/>
+    </g>
+    <g stroke="#7CF0B0" stroke-width="8" fill="none" stroke-linecap="round">
+      <path d="M330 300 V240 H390 M760 240 H820 V300 M330 800 V860 H390 M760 860 H820 V800"/>
+    </g>
+    <rect x="64" y="150" width="340" height="44" rx="22" fill="#000000" fill-opacity=".35"/>
+    <text x="234" y="180" font-size="22" fill="#FFFFFF" text-anchor="middle">影像只在這台電腦上處理</text>
+    <rect x="120" y="880" width="840" height="62" rx="31" fill="#FFFFFF"/>
+    <circle cx="162" cy="911" r="21" fill="#2E6B4E"/>
+    <path d="M153 905 H159 L167 898 V924 L159 917 H153 Z" fill="#FFFFFF"/>
+    <text x="198" y="922" font-size="30" font-weight="700" fill="#1F2A24">請側身坐好，讓我看到您的手臂</text>
+  </g>
+  <rect x="1070" y="126" width="490" height="834" rx="24" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <text x="1104" y="196" font-size="40" font-weight="700" fill="#1F2A24">位置檢查</text>
+  <g stroke="#FFFFFF" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="1126" cy="262" r="24" fill="#2E6B4E" stroke="none"/><path d="M1115 262 L1123 271 L1138 254"/>
+    <circle cx="1126" cy="347" r="24" fill="#2E6B4E" stroke="none"/><path d="M1115 347 L1123 356 L1138 339"/>
+    <circle cx="1126" cy="432" r="24" fill="#2E6B4E" stroke="none"/><path d="M1115 432 L1123 441 L1138 424"/>
+  </g>
+  <circle cx="1126" cy="517" r="24" fill="#F2B33D"/>
+  <g fill="#4A3300"><circle cx="1115" cy="517" r="4"/><circle cx="1126" cy="517" r="4"/><circle cx="1137" cy="517" r="4"/></g>
+  <text x="1166" y="273" font-size="30" fill="#1F2A24">光線足夠</text>
+  <text x="1166" y="358" font-size="30" fill="#1F2A24">看得到肩膀、手肘、手腕</text>
+  <text x="1166" y="443" font-size="30" fill="#1F2A24">側身坐在椅子上</text>
+  <text x="1166" y="528" font-size="30" fill="#8A5A0B" font-weight="700">雙腳踩穩地面…</text>
+  <path d="M1104 590 H1526" stroke="#E6EBE7" stroke-width="2"/>
+  <circle cx="1315" cy="740" r="126" fill="none" stroke="#CFE5D7" stroke-width="10"/>
+  <circle cx="1315" cy="740" r="104" fill="#2E6B4E"/>
+  <text x="1315" y="782" font-size="120" font-weight="700" fill="#FFFFFF" text-anchor="middle">3</text>
+  <text x="1315" y="920" font-size="28" fill="#5B6B62" text-anchor="middle">全部確認後自動開始</text>
+</svg>
+      </div>
+      <figcaption>
+        <span class="tag">畫面 B</span>
+        <b>位置檢查</b>
+        <span>用骨架點的可見度判斷「身體是否都在鏡頭內」。四項都通過才倒數，長輩不用自己按開始。</span>
+      </figcaption>
+    </figure>
+
+    <figure class="mock">
+      <div class="screen">
+<svg viewBox="0 0 1600 1000" role="img" aria-label="結算畫面：三顆星、總分 88，四項分數長條與進步提示">
+  <rect width="1600" height="1000" fill="#F1F6F1"/>
+  <rect width="1600" height="96" fill="#2E6B4E"/>
+  <text x="40" y="61" font-size="36" font-weight="700" fill="#FFFFFF" class="disp">摘果子 · 完成</text>
+  <rect x="160" y="126" width="1280" height="846" rx="32" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <rect x="1180" y="156" width="230" height="50" rx="25" fill="#E4F1E7"/>
+  <text x="1295" y="190" font-size="24" font-weight="700" fill="#2E6B4E" text-anchor="middle">花園澆水 +1</text>
+  <text x="800" y="236" font-size="66" font-weight="700" fill="#1F2A24" text-anchor="middle" class="disp">太棒了！</text>
+  <text x="800" y="290" font-size="32" fill="#5B6B62" text-anchor="middle">今天摘到 10 顆蘋果</text>
+  <g fill="#F2B33D">
+    <path d="M0,-1 L.247,-.34 L.951,-.309 L.399,.13 L.588,.809 L0,.42 L-.588,.809 L-.399,.13 L-.951,-.309 L-.247,-.34Z" transform="translate(716 358) scale(32)"/>
+    <path d="M0,-1 L.247,-.34 L.951,-.309 L.399,.13 L.588,.809 L0,.42 L-.588,.809 L-.399,.13 L-.951,-.309 L-.247,-.34Z" transform="translate(800 348) scale(40)"/>
+    <path d="M0,-1 L.247,-.34 L.951,-.309 L.399,.13 L.588,.809 L0,.42 L-.588,.809 L-.399,.13 L-.951,-.309 L-.247,-.34Z" transform="translate(884 358) scale(32)"/>
+  </g>
+  <circle cx="470" cy="590" r="140" fill="none" stroke="#E6EBE7" stroke-width="30"/>
+  <circle cx="470" cy="590" r="140" fill="none" stroke="#2E6B4E" stroke-width="30" stroke-dasharray="774 880" stroke-linecap="round" transform="rotate(-90 470 590)"/>
+  <text x="470" y="618" font-size="100" font-weight="700" fill="#1F2A24" text-anchor="middle">88</text>
+  <text x="470" y="664" font-size="28" fill="#5B6B62" text-anchor="middle">總分</text>
+  <g font-size="30" fill="#1F2A24">
+    <text x="700" y="490">動作幅度</text><text x="700" y="570">姿勢正確</text><text x="700" y="650">維持時間</text><text x="700" y="730">節奏穩定</text>
+  </g>
+  <g fill="#E6EBE7"><rect x="870" y="466" width="400" height="26" rx="13"/><rect x="870" y="546" width="400" height="26" rx="13"/><rect x="870" y="626" width="400" height="26" rx="13"/><rect x="870" y="706" width="400" height="26" rx="13"/></g>
+  <rect x="870" y="466" width="360" height="26" rx="13" fill="#2E6B4E"/>
+  <rect x="870" y="546" width="360" height="26" rx="13" fill="#4C9C62"/>
+  <rect x="870" y="626" width="340" height="26" rx="13" fill="#E0A126"/>
+  <rect x="870" y="706" width="320" height="26" rx="13" fill="#6C8FB3"/>
+  <g font-size="28" fill="#5B6B62" text-anchor="end">
+    <text x="1410" y="489">36 / 40</text><text x="1410" y="569">27 / 30</text><text x="1410" y="649">17 / 20</text><text x="1410" y="729">8 / 10</text>
+  </g>
+  <rect x="480" y="772" width="640" height="60" rx="30" fill="#FFF1D6"/>
+  <text x="800" y="812" font-size="28" font-weight="700" fill="#8A5A0B" text-anchor="middle">手臂最高 146°，比第一次多了 18°</text>
+  <rect x="440" y="862" width="340" height="80" rx="40" fill="#2E6B4E"/>
+  <text x="610" y="914" font-size="34" font-weight="700" fill="#FFFFFF" text-anchor="middle">再玩一次</text>
+  <rect x="822" y="864" width="336" height="76" rx="38" fill="#FFFFFF" stroke="#2E6B4E" stroke-width="4"/>
+  <text x="990" y="914" font-size="34" font-weight="700" fill="#2E6B4E" text-anchor="middle">回首頁</text>
+</svg>
+      </div>
+      <figcaption>
+        <span class="tag">畫面 D</span>
+        <b>結算</b>
+        <span>先給讚美與星星，再拆成四項分數。最後一句永遠是和長輩「自己的過去」比，不和別人比。</span>
+      </figcaption>
+    </figure>
+
+    <figure class="mock">
+      <div class="screen">
+<svg viewBox="0 0 1600 1000" role="img" aria-label="紀錄頁：近 14 天手臂最高角度從 128 度進步到 146 度的折線圖，右側統計與下方紀錄表">
+  <rect width="1600" height="1000" fill="#F1F6F1"/>
+  <rect width="1600" height="96" fill="#2E6B4E"/>
+  <text x="40" y="61" font-size="36" font-weight="700" fill="#FFFFFF" class="disp">動動紀錄 · 王奶奶</text>
+  <rect x="1290" y="22" width="270" height="52" rx="26" fill="#FFFFFF"/>
+  <text x="1425" y="57" font-size="26" font-weight="700" fill="#2E6B4E" text-anchor="middle">匯出給治療師</text>
+  <!-- chart card -->
+  <rect x="40" y="126" width="1030" height="580" rx="24" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <text x="70" y="180" font-size="32" font-weight="700" fill="#1F2A24">肩關節前舉 · 手臂最高角度</text>
+  <text x="70" y="216" font-size="22" fill="#5B6B62">近 14 天（示意資料）</text>
+  <g stroke="#EDF1EE" stroke-width="2"><path d="M150 250 H1000 M150 350 H1000 M150 450 H1000 M150 550 H1000"/></g>
+  <path d="M150 650 H1000" stroke="#C9D3CC" stroke-width="2"/>
+  <g font-size="20" fill="#5B6B62" text-anchor="end">
+    <text x="132" y="257">160°</text><text x="132" y="357">150°</text><text x="132" y="457">140°</text><text x="132" y="557">130°</text><text x="132" y="657">120°</text>
+  </g>
+  <path d="M150 350 H1000" stroke="#D64533" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="1000" y="338" font-size="22" font-weight="700" fill="#D64533" text-anchor="end">治療師目標 150°</text>
+  <path d="M150 570 L215.4 550 L280.8 560 L346.2 520 L411.5 500 L476.9 510 L542.3 480 L607.7 470 L673.1 450 L738.5 460 L803.8 430 L869.2 420 L934.6 400 L1000 390 L1000 650 L150 650 Z" fill="#2E6B4E" fill-opacity=".12"/>
+  <path d="M150 570 L215.4 550 L280.8 560 L346.2 520 L411.5 500 L476.9 510 L542.3 480 L607.7 470 L673.1 450 L738.5 460 L803.8 430 L869.2 420 L934.6 400 L1000 390" fill="none" stroke="#2E6B4E" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="150" cy="570" r="7" fill="#2E6B4E"/>
+  <text x="150" y="602" font-size="22" fill="#5B6B62" text-anchor="middle">128°</text>
+  <circle cx="1000" cy="390" r="10" fill="#2E6B4E" stroke="#FFFFFF" stroke-width="3"/>
+  <text x="1000" y="374" font-size="26" font-weight="700" fill="#2E6B4E" text-anchor="middle">146°</text>
+  <g font-size="20" fill="#5B6B62" text-anchor="middle">
+    <text x="150" y="684">10/4</text><text x="411.5" y="684">10/8</text><text x="673.1" y="684">10/12</text><text x="1000" y="684">10/17</text>
+  </g>
+  <!-- stats card -->
+  <rect x="1100" y="126" width="460" height="580" rx="24" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <text x="1130" y="180" font-size="32" font-weight="700" fill="#1F2A24">這兩週</text>
+  <g font-size="26" fill="#5B6B62"><text x="1130" y="252">運動天數</text><text x="1130" y="332">平均分數</text><text x="1130" y="412">角度進步</text><text x="1130" y="492">會痛紀錄</text></g>
+  <g font-size="34" font-weight="700" fill="#1F2A24" text-anchor="end">
+    <text x="1530" y="254">14 / 14 天</text><text x="1530" y="334">86 分</text><text x="1530" y="414" fill="#2E6B4E">+18°</text><text x="1530" y="494">0 次</text>
+  </g>
+  <path d="M1130 284 H1530 M1130 364 H1530 M1130 444 H1530" stroke="#E6EBE7" stroke-width="2"/>
+  <text x="1130" y="566" font-size="24" fill="#5B6B62">每日打卡</text>
+  <g fill="#4C9C62">
+    <circle cx="1150" cy="608" r="17"/><circle cx="1206" cy="608" r="17"/><circle cx="1262" cy="608" r="17"/><circle cx="1318" cy="608" r="17"/><circle cx="1374" cy="608" r="17"/><circle cx="1430" cy="608" r="17"/><circle cx="1486" cy="608" r="17"/>
+    <circle cx="1150" cy="660" r="17"/><circle cx="1206" cy="660" r="17"/><circle cx="1262" cy="660" r="17"/><circle cx="1318" cy="660" r="17"/><circle cx="1374" cy="660" r="17"/><circle cx="1430" cy="660" r="17"/>
+  </g>
+  <circle cx="1486" cy="660" r="17" fill="#4C9C62" stroke="#F2B33D" stroke-width="5"/>
+  <!-- table -->
+  <rect x="40" y="730" width="1520" height="242" rx="24" fill="#FFFFFF" stroke="#DCE4DE" stroke-width="2"/>
+  <g font-size="24" font-weight="700" fill="#5B6B62">
+    <text x="80" y="784">日期</text><text x="240" y="784">遊戲</text><text x="460" y="784">次數</text><text x="610" y="784">分數</text><text x="760" y="784">最高角度</text><text x="980" y="784">系統備註</text>
+  </g>
+  <path d="M70 804 H1530" stroke="#E6EBE7" stroke-width="2"/>
+  <g font-size="26" fill="#1F2A24">
+    <text x="80" y="850">10/17</text><text x="240" y="850">摘果子</text><text x="460" y="850">10</text><text x="610" y="850">88</text><text x="760" y="850">146°</text><text x="980" y="850" fill="#5B6B62">狀況很好</text>
+    <text x="80" y="900">10/16</text><text x="240" y="900">摘果子</text><text x="460" y="900">10</text><text x="610" y="900">85</text><text x="760" y="900">145°</text><text x="980" y="900" fill="#5B6B62">—</text>
+    <text x="80" y="950">10/15</text><text x="240" y="950">摘果子</text><text x="460" y="950">10</text><text x="610" y="950">84</text><text x="760" y="950">143°</text><text x="980" y="950" fill="#8A5A0B">第 7 下身體稍微後仰</text>
+  </g>
+</svg>
+      </div>
+      <figcaption>
+        <span class="tag">畫面 E</span>
+        <b>紀錄：給家屬與治療師</b>
+        <span>治療師最需要的是角度趨勢。系統備註自動記下代償動作，方便下次調整目標。</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="scoring">
+  <div class="section-head">
+    <h2>動作判斷與評分邏輯</h2>
+    <p>MediaPipe 每張畫面給出 33 個身體關鍵點的座標。把三個點連成一個夾角，就能知道關節彎了幾度；再用狀態機判斷「一下」的開始與結束。</p>
+  </div>
+
+  <div class="diagram" role="img" aria-label="動作狀態機：準備、抬手中、到達目標、放下，完成後回到準備並計一次">
+<svg viewBox="0 0 960 240">
+  <defs>
+    <marker id="smArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" class="sm-head"/>
+    </marker>
+  </defs>
+  <rect x="10" y="30" width="190" height="84" rx="14" class="sm-box"/>
+  <text x="105" y="66" text-anchor="middle" class="sm-t">準備</text>
+  <text x="105" y="94" text-anchor="middle" class="sm-s">角度 40° 以下</text>
+  <rect x="260" y="30" width="190" height="84" rx="14" class="sm-box"/>
+  <text x="355" y="66" text-anchor="middle" class="sm-t">抬手中</text>
+  <text x="355" y="94" text-anchor="middle" class="sm-s">角度持續增加</text>
+  <rect x="510" y="30" width="190" height="84" rx="14" class="sm-goal"/>
+  <text x="605" y="66" text-anchor="middle" class="sm-t">到達目標</text>
+  <text x="605" y="94" text-anchor="middle" class="sm-s">≥ 個人目標，撐 2 秒</text>
+  <rect x="760" y="30" width="190" height="84" rx="14" class="sm-box"/>
+  <text x="855" y="66" text-anchor="middle" class="sm-t">放下</text>
+  <text x="855" y="94" text-anchor="middle" class="sm-s">回到 40° 以下</text>
+  <path d="M200 72 H254" class="sm-arrow" marker-end="url(#smArrow)"/>
+  <path d="M450 72 H504" class="sm-arrow" marker-end="url(#smArrow)"/>
+  <path d="M700 72 H754" class="sm-arrow" marker-end="url(#smArrow)"/>
+  <path d="M855 114 V180 H105 V120" class="sm-arrow" marker-end="url(#smArrow)"/>
+  <text x="480" y="210" text-anchor="middle" class="sm-s">完成 1 次：計分、摘下蘋果、播放語音回饋</text>
+  <path d="M355 114 V150 H605 V120" class="sm-arrow" stroke-dasharray="6 5" marker-end="url(#smArrow)"/>
+  <text x="480" y="142" text-anchor="middle" class="sm-s">沒到目標就放下：仍計 1 次，幅度分較低</text>
+</svg>
+  </div>
+
+  <div class="section-head">
+    <h3>每一下的分數（滿分 100）</h3>
+  </div>
+  <div class="weights" role="img" aria-label="分數比重：動作幅度 40、姿勢正確 30、維持時間 20、節奏穩定 10">
+    <div class="w-range">動作幅度 40</div>
+    <div class="w-form">姿勢正確 30</div>
+    <div class="w-hold">維持 20</div>
+    <div class="w-tempo">節奏 10</div>
+  </div>
+  <div class="rules">
+    <div class="rule"><h3>動作幅度</h3><span class="pts">40 分 × min(最高角度 ÷ 個人目標, 1)</span><p>最高 146°、目標 150° 時得 39 分。差一點點仍有大部分分數。</p></div>
+    <div class="rule"><h3>姿勢正確</h3><span class="pts">30 分，每種代償扣 10 分</span><p>手肘角度 &lt; 160°（手彎了）、身體後仰超過 15°、肩膀與耳朵距離明顯變短（聳肩）。扣分同時念出提醒，例如「手肘再伸直一點」。</p></div>
+    <div class="rule"><h3>維持時間</h3><span class="pts">20 分 × min(撐住秒數 ÷ 2 秒, 1)</span><p>在目標角度 ±5° 內停留的時間。訓練肌耐力，也避免甩手衝高。</p></div>
+    <div class="rule"><h3>節奏穩定</h3><span class="pts">10 分，抬起花 1.5～4 秒得滿分</span><p>太快可能是用甩的，太慢可能是太累。兩邊都逐漸扣分，不一次扣光。</p></div>
+  </div>
+  <div class="callout">
+    <b>個人化目標，是給長輩用最重要的設計</b>
+    <p>第一次使用先做 3 下「能力測量」，取最大角度當基準。個人目標 = 基準 + 5°，且不超過治療師設定的上限。每週平均達標後才自動調高。這樣進步看得到，也不會因為每次都達不到標準而放棄。</p>
+  </div>
+</section>
+
+<section id="games">
+  <div class="section-head">
+    <h2>遊戲與動作對照</h2>
+    <p>每個動作包裝成一個生活情境的小遊戲。MVP 先做第一列，其餘依開發階段加入。動作與標準建議請職能或物理治療師確認。</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>遊戲</th><th>對應動作</th><th>鏡頭方向</th><th>判斷方式</th><th>代償檢查</th><th>階段</th></tr></thead>
+      <tbody>
+        <tr><td><b>摘果子</b></td><td>肩關節前舉</td><td>側面</td><td>髖–肩–肘夾角達個人目標</td><td>手肘彎曲、身體後仰、聳肩</td><td><span class="pill">MVP</span></td></tr>
+        <tr><td><b>打鼓</b></td><td>跨體拍肩</td><td>正面</td><td>手腕到對側肩距離 &lt; 0.3 倍肩寬，左右交替才計次</td><td>軀幹旋轉過大</td><td><span class="pill later">V1</span></td></tr>
+        <tr><td><b>彈鋼琴</b></td><td>手指對指</td><td>正面，手靠近鏡頭</td><td>拇指尖依序碰食指、中指、無名指、小指（手部 21 點）</td><td>順序錯誤不計分</td><td><span class="pill later">V1</span></td></tr>
+        <tr><td><b>騎單車遊台灣</b></td><td>坐姿抬腿（膝伸直）</td><td>側面</td><td>髖–膝–踝夾角接近 180°</td><td>身體往後倒</td><td><span class="pill later">V1</span></td></tr>
+        <tr><td><b>升國旗</b></td><td>坐到站</td><td>側面</td><td>髖部高度變化＋膝角度</td><td>雙手撐椅子（手腕位置）</td><td><span class="pill later">V2</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="two">
+    <div>
+      <h3>遊戲獎勵</h3>
+      <p>星星、連續天數、回春花園。每天運動就幫花澆一次水，兩週開一朵花。家屬可以在紀錄頁按讚，長輩下次開啟時會聽到「孫子幫您按讚了」。</p>
+    </div>
+    <div>
+      <h3>不設失敗</h3>
+      <p>沒有 Game Over、不倒數催促，速度跟著長輩走。沒摘到的蘋果會「掉下來」也算數，只是比較小顆。讚美要具體：「這次比昨天高了 5 度」。</p>
+    </div>
+  </div>
+</section>
+
+<section id="ux">
+  <div class="section-head">
+    <h2>長輩介面原則</h2>
+    <p>延續範例做得好的地方（語音引導、高對比模式），再補上遊戲需要的部分。</p>
+  </div>
+  <div class="principles">
+    <div><h3>看得清楚</h3><p>內文至少 24px、按鈕至少 64px 高、高對比色。電腦放在 1.5 公尺外也看得到分數。</p></div>
+    <div><h3>一個按鈕</h3><p>選遊戲後全自動：位置檢查、倒數、開始、結算。中途不需要滑鼠。</p></div>
+    <div><h3>聽得懂</h3><p>每個提示都有中文語音。之後可錄製台語、客語版本，用錄音取代合成語音。</p></div>
+    <div><h3>坐著做</h3><p>所有動作都有坐姿版本。MVP 只做坐姿，降低跌倒風險。</p></div>
+    <div><h3>隨時能停</h3><p>「會痛就按這裡」永遠在左下角，也支援說「停」。停止會記錄下來給治療師看。</p></div>
+    <div><h3>適時休息</h3><p>每 10 下自動休息 30 秒；偵測到動作明顯變慢就主動問「要不要休息一下？」</p></div>
+  </div>
+</section>
+
+<section id="tech">
+  <div class="section-head">
+    <h2>技術架構</h2>
+    <p>純前端網頁，瀏覽器打開就能用，不需要伺服器。綠框是在使用者電腦上執行的部分，MVP 全部都是。</p>
+  </div>
+  <div class="flow" aria-label="資料流程">
+    <div class="node local"><b>鏡頭</b><span>getUserMedia</span></div><span class="arrow">→</span>
+    <div class="node local"><b>骨架偵測</b><span>MediaPipe Pose</span></div><span class="arrow">→</span>
+    <div class="node local"><b>平滑處理</b><span>移動平均去抖動</span></div><span class="arrow">→</span>
+    <div class="node local"><b>角度計算</b><span>三點夾角</span></div><span class="arrow">→</span>
+    <div class="node local"><b>動作狀態機</b><span>判斷「一下」</span></div><span class="arrow">→</span>
+    <div class="node local"><b>評分引擎</b><span>四項分數</span></div><span class="arrow">→</span>
+    <div class="node local"><b>遊戲畫面＋語音</b><span>Canvas · Web Speech</span></div><span class="arrow">→</span>
+    <div class="node local"><b>紀錄</b><span>IndexedDB</span></div>
+  </div>
+  <div class="two">
+    <div>
+      <h3>技術選擇</h3>
+      <div class="table-wrap">
+        <table style="min-width: 0">
+          <tbody>
+            <tr><th>骨架偵測</th><td>MediaPipe Tasks Vision（Pose 33 點、Hand 21 點），在瀏覽器裡執行</td></tr>
+            <tr><th>畫面</th><td>HTML Canvas 疊在鏡頭影像上</td></tr>
+            <tr><th>語音</th><td>Web Speech API（zh-TW）</td></tr>
+            <tr><th>儲存</th><td>IndexedDB，之後再加雲端同步</td></tr>
+            <tr><th>AI（選配）</th><td>V2 才用 LLM 寫週報，不參與即時評分</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>MVP 檔案結構</h3>
+<pre>回春動動/
+├─ index.html          <span class="c">首頁＋遊戲畫面</span>
+├─ css/style.css
+├─ js/pose.js          <span class="c">載入 MediaPipe、取骨架點</span>
+├─ js/angle.js         <span class="c">角度計算、平滑</span>
+├─ js/exercise.js      <span class="c">狀態機與評分</span>
+├─ js/game-apple.js    <span class="c">摘果子遊戲</span>
+├─ js/voice.js         <span class="c">語音提示</span>
+├─ js/storage.js       <span class="c">紀錄存取</span>
+└─ exercises/
+   └─ shoulder-flexion.json</pre>
+    </div>
+    <div>
+      <h3>動作設定檔</h3>
+      <p>每個動作寫成一份設定檔。新增動作或治療師調整標準時，只改設定，不改程式。</p>
+<pre>{
+  "id": "shoulder-flexion",
+  "name": "肩關節前舉",
+  "view": "side",
+  "angle": ["hip", "shoulder", "elbow"],
+  "startBelow": 40,
+  "targetMax": 150,
+  "holdSeconds": 2,
+  "reps": 10,
+  "tempo": { "min": 1.5, "max": 4 },
+  "checks": [
+    { "type": "elbowBent", "minAngle": 160,
+      "penalty": 10, "voice": "手肘再伸直一點" },
+    { "type": "trunkLean", "maxDelta": 15,
+      "penalty": 10, "voice": "身體坐正，不要往後仰" },
+    { "type": "shrug", "ratio": 0.8,
+      "penalty": 10, "voice": "肩膀放輕鬆" }
+  ],
+  "weights": { "range": 40, "form": 30,
+               "hold": 20, "tempo": 10 }
+}</pre>
+    </div>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="section-head">
+    <h2>開發階段</h2>
+    <p>先用一個動作把整條流程做通，確認長輩真的會用、評分合理，再擴充動作數量。</p>
+  </div>
+  <div class="phases">
+    <div class="phase now">
+      <header><h3>MVP</h3><span class="time">1～2 週</span></header>
+      <ul>
+        <li>肩關節前舉＋摘果子</li>
+        <li>位置檢查與倒數</li>
+        <li>狀態機計次、四項評分</li>
+        <li>中文語音提示</li>
+        <li>結算畫面</li>
+        <li>本機儲存每次結果</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <header><h3>V1</h3><span class="time">3～4 週</span></header>
+      <ul>
+        <li>加入打鼓、彈鋼琴、騎單車</li>
+        <li>能力測量與個人化目標</li>
+        <li>首頁、回春花園、連續天數</li>
+        <li>紀錄頁與角度趨勢圖</li>
+        <li>匯出 PDF／CSV</li>
+        <li>高對比模式</li>
+      </ul>
+    </div>
+    <div class="phase">
+      <header><h3>V2</h3><span class="time">之後</span></header>
+      <ul>
+        <li>帳號與雲端同步</li>
+        <li>家屬查看頁、按讚</li>
+        <li>治療師後台：自訂動作與標準</li>
+        <li>AI 週報</li>
+        <li>台語、客語語音</li>
+        <li>據點團體模式（多人輪流）</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="risks">
+  <div class="section-head">
+    <h2>限制與風險</h2>
+  </div>
+  <ul class="risks">
+    <li><b>一般鏡頭沒有深度</b><span>只有平面影像，朝鏡頭前後的動作量不準。前舉要請長輩側身坐，跨體拍肩則用正面。</span></li>
+    <li><b>光線與背景</b><span>背光或太暗時骨架點會跳動。位置檢查會先確認光線，不足就請長輩開燈。</span></li>
+    <li><b>多人入鏡</b><span>家人站在旁邊時，只追蹤畫面中間、最大的那個人。</span></li>
+    <li><b>骨架點抖動</b><span>用移動平均平滑，並要求角度連續幾張畫面都達標才算到達。</span></li>
+    <li><b>電腦效能</b><span>舊筆電可能跑不到每秒 30 張。改用輕量模型，或降到每秒 15 張，計次仍然準確。</span></li>
+    <li><b>醫療定位</b><span>這是輔助練習工具，不是醫療器材。需要免責聲明，動作與標準請治療師確認。</span></li>
+  </ul>
+</section>
+
+<section id="decide">
+  <div class="section-head">
+    <h2>待決定事項</h2>
+    <p>這些答案會影響 V1 之後的設計，MVP 可以先做。</p>
+  </div>
+  <ol class="ask">
+    <li><b>使用情境</b><span>長輩在家自己用，還是在社區據點、長照中心由照服員帶著用？後者需要「多人輪流」與更大的畫面。</span></li>
+    <li><b>動作清單</b><span>有沒有合作的治療師提供指定動作與角度標準？沒有的話先用表格中的常見上肢動作。</span></li>
+    <li><b>紀錄給誰看</b><span>只給長輩自己、也給家屬，還是要給治療師？決定是否需要帳號與雲端。</span></li>
+  </ol>
+</section>
+
+<footer>回春動動 · 產品規劃草案 v0.1 · 2026-10-17。畫面中的姓名、分數與角度皆為示意資料。</footer>
+
+</div>
